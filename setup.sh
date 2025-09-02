@@ -5,7 +5,7 @@ set -e
 # Backend (dev, fast-restart)
 ############################
 
-build_backend() {
+rebuild_backend() {
   echo "🗑️  Removendo imagem antiga (se existir)..."
   docker rmi -f "$IMAGE_NAME" 2>/dev/null || true
 
@@ -80,7 +80,7 @@ remove_db() {
 usage() {
   cat <<EOF
 Uso:
-  $0 backend [--build|--restart|--stop|--log]
+  $0 backend [--rebuild|--restart|--stop|--log]
   $0 db [--rebuild|--remove]
 EOF
   exit 1
@@ -92,7 +92,7 @@ main() {
   case "$1" in
     backend)
       case "$2" in
-        --build)   build_backend ;;
+        --rebuild)   rebuild_backend ;;
         --restart) restart_backend ;;
         --stop)    stop_backend ;;
         --log)     log_backend ;;

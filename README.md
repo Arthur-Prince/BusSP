@@ -41,7 +41,7 @@ O banco ficará disponível em:
 ### 1. Build da imagem
 
 ```bash
-./setup.sh backend --build
+./setup.sh backend --rebuild
 ```
 
 ### 2. Subir ou reiniciar o container
