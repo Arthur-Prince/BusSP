@@ -72,7 +72,3 @@ Isso vai:
 ```bash
 ./setup.sh backend --stop
 ```
-
----
-
-Quer que eu adicione também uma **sessão para rodar o frontend (React/Angular/etc.)** já integrada com o backend e o banco?
