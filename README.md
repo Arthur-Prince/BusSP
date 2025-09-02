@@ -1,7 +1,15 @@
 # BusSP — Projeto da disciplina de Engenharia de Software
 
-Projeto desenvolvido para a disciplina de **Engenharia de Software**.
-Este repositório contém a configuração para rodar o **banco de dados (PostgreSQL)** e o **backend (Spring)** em containers Docker, utilizando o script `setup.sh`.
+O **BusSP** é um aplicativo que mostra a posição atual dos ônibus, trazendo uma **pegada de gamificação**: quanto mais o usuário anda de ônibus, mais pontos acumula.
+Além disso, o projeto tem um viés **ecológico**, incentivando o transporte público como alternativa sustentável.
+
+---
+
+## 🚀 Dependência: Docker
+
+Para executar o projeto, é necessário ter o **Docker** instalado.
+Você pode instalar o Docker seguindo a documentação oficial:
+👉 [Guia de instalação do Docker](https://docs.docker.com/engine/install/)
 
 ---
 
@@ -22,7 +30,6 @@ Isso irá:
 
 O banco ficará disponível em:
 
-* **Host:** `localhost`
 * **Porta:** `5433`
 * **Database:** `bussp`
 * **Usuário:** `bussp`
@@ -66,3 +73,6 @@ Isso vai:
 ./setup.sh backend --stop
 ```
 
+---
+
+Quer que eu adicione também uma **sessão para rodar o frontend (React/Angular/etc.)** já integrada com o backend e o banco?

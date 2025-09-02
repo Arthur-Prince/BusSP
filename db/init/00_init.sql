@@ -5,5 +5,3 @@ CREATE TABLE IF NOT EXISTS test_data (
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
--- Insere um registro inicial
-INSERT INTO test_data (name) VALUES ('test');
