@@ -17,6 +17,8 @@ restart_backend() {
   echo "♻️  Reiniciando container do backend..."
   docker rm -f "$SERVICE_NAME" 2>/dev/null || true
   docker run -d --name "$SERVICE_NAME" \
+    --network "$NET_NAME" \
+    --env-file .env \
     -p 8080:8080 \
     -v "$BACKEND_DIR":/app \
     "$IMAGE_NAME"
@@ -29,25 +31,32 @@ stop_backend() {
 
 log_backend() {
   echo "📜 Logs do backend (CTRL+C para sair)..."
-  docker logs -f --tail=200 "$SERVICE_NAME"
+  docker logs -f "$SERVICE_NAME"
 }
 
 ############################
 # Database (PostgreSQL)
 ############################
 
+ensure_network() {
+  if ! docker network inspect "$NET_NAME" >/dev/null 2>&1; then
+    docker network create "$NET_NAME"
+  fi
+}
+
+
 build_db() {
   echo "🧱 Buildando imagem do DB..."
-  docker build -t "$DB_IMAGE" "$DB_DIR"
+  docker build \
+  -t "$DB_IMAGE" "$DB_DIR"
 }
 
 run_db() {
   echo "🚀 Subindo container do DB..."
   docker run -d --name "$DB_CONTAINER" \
-    -e POSTGRES_DB="$POSTGRES_DB" \
-    -e POSTGRES_USER="$POSTGRES_USER" \
-    -e POSTGRES_PASSWORD="$POSTGRES_PASSWORD" \
-    -p "$DB_HOST_PORT":5432 \
+    --network "$NET_NAME" \
+    --env-file .env \
+    -p "$DB_HOST_PORT":5433 \
     -v bussp_pgdata:/var/lib/postgresql/data \
     "$DB_IMAGE"
 }
@@ -67,6 +76,7 @@ rebuild_db() {
   stop_db
   docker volume rm bussp_pgdata >/dev/null 2>&1 || true
   rmi_db
+  ensure_network
   build_db
   run_db
 }
@@ -87,7 +97,7 @@ EOF
 }
 
 main() {
-  source env.sh
+  export $(grep -v '^#' .env | xargs)
 
   case "$1" in
     backend)

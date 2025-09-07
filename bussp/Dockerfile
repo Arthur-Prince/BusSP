@@ -1,6 +1,7 @@
 # Dev: usa Maven e JDK para rodar spring-boot:run
 FROM maven:3.9.8-eclipse-temurin-21-alpine
 
+ENV SPRING_PROFILES_ACTIVE=container
 
 WORKDIR /app
 
